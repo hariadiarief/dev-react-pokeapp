@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import App from './App'
+import RootContextProvider from 'Context/RootContext'
 import './Style/Main.scss'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
@@ -9,7 +10,9 @@ import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<RootContextProvider>
+			<App />
+		</RootContextProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 )
