@@ -13,7 +13,5 @@ export default function DetailPokemon({ match }) {
 			})
 	}
 
-	console.log(detailPokemon)
-
 	return <h1>{detailPokemon?.name}</h1>
 }
