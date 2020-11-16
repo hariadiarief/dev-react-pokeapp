@@ -4,11 +4,11 @@ export const LocaleContext = createContext()
 export const LocaleContextConsumer = LocaleContext.Consumer
 
 export default function LocaleContextProvider({ children }) {
-	const [pokeballs, setPokeballs] = useState([])
+	const [pokedex, setPokedex] = useState([])
 
-	const updatePokeballs = (params) => {
-		setPokeballs([...pokeballs, params])
+	const updatePokedex = (params) => {
+		setPokedex([...pokedex, params])
 	}
 
-	return <LocaleContext.Provider value={{ pokeballs, setPokeballs }}>{children}</LocaleContext.Provider>
+	return <LocaleContext.Provider value={{ pokedex, setPokedex }}>{children}</LocaleContext.Provider>
 }

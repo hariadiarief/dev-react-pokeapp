@@ -1,27 +1,30 @@
-import React, { useState, useContext } from 'react'
-
-import { LocaleContext } from 'Context/LocaleContext'
+import React, { useState, useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
-	const [temp, setTemp] = useState('')
-	const localContext = useContext(LocaleContext)
+	const [pokemons, setPokemons] = useState([])
+
+	useEffect(() => {
+		fetchPokemon()
+	}, [])
+
+	const fetchPokemon = () => {
+		fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=1')
+			.then((response) => response.json())
+			.then((json) => {
+				setPokemons(json.results)
+			})
+	}
 
 	return (
 		<div>
 			<ul>
-				{localContext.pokeballs.map((pokeball) => (
-					<li>{pokeball}</li>
+				{pokemons.map((pokemon, index) => (
+					<Link to={{ pathname: `/${index + 2}`, state: { scrollTo: 'pricing', offset: -200 } }} className='statistic__cta__membership'>
+						<li>{pokemon?.name}</li>
+					</Link>
 				))}
 			</ul>
-			<form onSubmit={handleSubmit}>
-				<input type='text' value={temp} onChange={({ target: { value } }) => setTemp(value)} />
-				<button type='submit'>submit</button>
-			</form>
 		</div>
 	)
-
-	function handleSubmit(event) {
-		event.preventDefault()
-		localContext.setPokeballs([...localContext.pokeballs, temp])
-	}
 }
