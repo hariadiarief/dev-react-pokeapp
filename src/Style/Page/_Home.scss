@@ -1,0 +1,28 @@
+.home__title {
+    font-weight: 600;
+    font-size: 31px;
+    color: #616161;
+    text-align: center;
+    padding-top: 25px;
+}
+
+.home__grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+    justify-content: center;
+    grid-gap: 32px 20px;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0 0 16px #e5e5e5;
+        background-color: #ffffff;
+        color: #616161;
+        font-weight: 500;
+        font-size: 21px;
+    }
+}

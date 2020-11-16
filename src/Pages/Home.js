@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
-	const [limit, setLimit] = useState(5)
+	const [limit, setLimit] = useState(20)
 	const [offset, setOffset] = useState(0)
 	const [pokemons, setPokemons] = useState({ isLoading: false, items: [] })
 	const [pokemonDetail, setPokemonDetail] = useState({ isLoading: true, items: [] })
@@ -22,7 +22,6 @@ export default function Home() {
 				})
 			})
 			setPokemons((prevState) => ({ ...prevState, isLoading: false, items: data }))
-
 			data.forEach((items) => fetchPokemonDetail(items.id))
 		} else {
 			console.error()
@@ -40,20 +39,18 @@ export default function Home() {
 	}
 
 	return (
-		<div>
-			<h1>poke poke</h1>
-			<ul>
+		<div className='home'>
+			<div className='home__title'>Poke Apps</div>
+			<div className='home__grid'>
 				{pokemons.items.map((pokemon, index) => {
 					return (
-						<Link key={index} to={{ pathname: `/${pokemon.id}`, state: { scrollTo: 'pricing', offset: -200 } }} className='statistic__cta__membership'>
-							<li>
-								{pokemon.id} : {pokemon?.name}
-								<img src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.back_default} alt='' />
-							</li>
+						<Link className='home__grid__item' key={index} to={`/${pokemon.id}`}>
+							<img src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.back_default} alt='' />
+							<span>{pokemon?.name}</span>
 						</Link>
 					)
 				})}
-			</ul>
+			</div>
 		</div>
 	)
 }
