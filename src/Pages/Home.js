@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
 
-import Image from 'Assets/pokeball.png'
+import { LocaleContext } from 'Context/LocaleContext'
+
+import ImgPokeBall from 'Assets/pokeball.png'
+import ImgBroken from 'Assets/broken.png'
+import ImgLoader from 'Assets/loader.gif'
 
 export default function Home() {
+	const localeContext = useContext(LocaleContext)
+
 	const limit = 10
 	const [offset, setOffset] = useState(0)
 	const [isHasMore, setIsHasMore] = useState(null)
 	const [pokemons, setPokemons] = useState({ isLoading: true, isLoadingMore: false, items: [] })
 	const [pokemonDetail, setPokemonDetail] = useState({ isLoading: true, items: [] })
-
-	useEffect(() => {
-		setPokemons((prevState) => ({ ...prevState, isLoadingMore: true }))
-		fetchPokemon({ offset: offset + limit })
-	}, [offset])
 
 	const fetchPokemon = async () => {
 		const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -50,6 +51,11 @@ export default function Home() {
 		}
 	}
 
+	useEffect(() => {
+		setPokemons((prevState) => ({ ...prevState, isLoadingMore: true }))
+		fetchPokemon({ offset: offset + limit })
+	}, [offset])
+
 	return (
 		<div className='home'>
 			<div className='home__title'>Poke Apps</div>
@@ -57,20 +63,22 @@ export default function Home() {
 			<div className='home__grid container'>
 				{pokemons.items.map((pokemon, index) => {
 					return (
-						<Link className='home__grid__item' key={index} to={`/${pokemon.id}`}>
-							<div className='home__grid__item__save'>
-								<img src={() => require('Assets/pokeball.png')} alt='poke-ball' />
+						<div className='home__grid__item' key={index}>
+							<div className='home__grid__item__save' onClick={() => localeContext.setPokedex((prevState) => [...prevState, pokemon.id])}>
+								<img src={ImgPokeBall} alt='poke-ball' />
 							</div>
-							<img
-								src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.back_default ?? require('Assets/logo.png')}
-								onError={(e) => {
-									e.target.onError = null
-									e.target.src = require('Assets/broken.png')
-								}}
-								alt={pokemon.name}
-							/>
-							<span>{pokemon?.name}</span>
-						</Link>
+							<Link className='home__grid__item__content' to={`/${pokemon.id}`}>
+								<img
+									src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.back_default ?? ImgLoader}
+									onError={(e) => {
+										e.target.onError = null
+										e.target.src = ImgBroken
+									}}
+									alt={pokemon.name}
+								/>
+								<span>{pokemon?.name}</span>
+							</Link>
+						</div>
 					)
 				})}
 			</div>

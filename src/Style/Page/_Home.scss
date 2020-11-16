@@ -14,15 +14,42 @@
     grid-gap: 32px 20px;
 
     &__item {
+        border-radius: 10px;
+        box-shadow: 0 0 16px #e5e5e5;
+        position: relative;
+    }
+
+    &__item__save {
+        z-index: 90;
+        background-color: red;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 18px;
+        border: 1px solid #e5e5e5;
+        border-radius: 0 10px 0 0;
+
+        >img {
+            width: 21px;
+            height: 21px;
+        }
+    }
+
+    &__item__content {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         border-radius: 10px;
-        box-shadow: 0 0 16px #e5e5e5;
         background-color: #ffffff;
         color: #616161;
         font-weight: 500;
         font-size: 21px;
+
+        >img {
+            height: 96px;
+            width: 96px;
+        }
     }
 }
