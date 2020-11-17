@@ -18,7 +18,7 @@ export default function Pokdex() {
 				{localeContext.pokedex.items?.map((pokemon, index) => {
 					return (
 						<div className='home__grid__item' key={index}>
-							<div className='home__grid__item__save' onClick={() => localeContext.setPokedex((prevState) => [...prevState, pokemon.id])}>
+							<div className='home__grid__item__save' onClick={() => localeContext.releasePokemon(pokemon.id)}>
 								<img src={ImgPokeBall} alt='poke-ball' />
 							</div>
 							<Link className='home__grid__item__content' to={`/${pokemon.id}`}>

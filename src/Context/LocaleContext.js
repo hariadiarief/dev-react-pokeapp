@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const LocaleContext = createContext()
 export const LocaleContextConsumer = LocaleContext.Consumer
@@ -6,12 +6,16 @@ export const LocaleContextConsumer = LocaleContext.Consumer
 export default function LocaleContextProvider({ children }) {
 	const [pokedex, setPokedex] = useState({
 		isLoading: false,
-		items: [
-			{ id: 1, name: 'bulbasaur', spiritImage: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' },
-			{ id: 4, name: 'charmander', spiritImage: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png' },
-			{ id: 8, name: 'wartortle', spiritImage: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png' },
-		],
+		items: JSON.parse(localStorage.getItem('pokedex')) ?? [],
 	})
 
-	return <LocaleContext.Provider value={{ pokedex, setPokedex }}>{children}</LocaleContext.Provider>
+	const releasePokemon = async (pokeId) => {
+		setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) }))
+	}
+
+	useEffect(() => {
+		localStorage.setItem(`pokedex`, JSON.stringify(pokedex.items))
+	}, [pokedex])
+
+	return <LocaleContext.Provider value={{ pokedex, setPokedex, releasePokemon }}>{children}</LocaleContext.Provider>
 }
