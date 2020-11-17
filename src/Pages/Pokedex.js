@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { LocaleContext } from 'Context/LocaleContext'
 
-import ImgPokeBall from 'Assets/pokeball.png'
+import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
 import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
 
@@ -18,10 +18,13 @@ export default function Pokdex() {
 				{localeContext.pokedex.items?.map((pokemon, index) => {
 					return (
 						<div className='home__grid__item' key={index}>
-							<div className='home__grid__item__save' onClick={() => localeContext.releasePokemon(pokemon.id)}>
-								<img src={ImgPokeBall} alt='poke-ball' />
+							<div
+								className='home__grid__item__save'
+								style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+								onClick={() => localeContext.releasePokemon(pokemon.id)}>
+								<img src={ImgPokeBallFilled} alt='poke-ball' />
 							</div>
-							<Link className='home__grid__item__content' to={`/${pokemon.id}`}>
+							<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
 								<img
 									src={pokemon.spiritImage ?? ImgLoader}
 									onError={(e) => {

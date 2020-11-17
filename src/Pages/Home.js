@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 
 import { LocaleContext } from 'Context/LocaleContext'
 
-import ImgPokeBall from 'Assets/pokeball.png'
 import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
+import ImgPokeBallEmplty from 'Assets/pokeball-empty.png'
+import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
 
 export default function Home() {
 	const localeContext = useContext(LocaleContext)
@@ -54,6 +55,7 @@ export default function Home() {
 	useEffect(() => {
 		setPokemons((prevState) => ({ ...prevState, isLoadingMore: true }))
 		fetchPokemon({ offset: offset + limit })
+		// eslint-disable-next-line
 	}, [offset])
 
 	return (
@@ -64,21 +66,27 @@ export default function Home() {
 				{pokemons.items.map((pokemon, index) => {
 					return (
 						<div className='home__grid__item' key={index}>
-							<div
+							<button
 								className='home__grid__item__save'
-								onClick={() =>
-									localeContext.setPokedex((prevState) => ({
-										...prevState,
-										items: [
-											...prevState.items,
-											{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
-										],
-									}))
-								}>
-								<img src={ImgPokeBall} alt='poke-ball' />
-							</div>
+								style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+								onClick={() => {
+									if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
+										localeContext.releasePokemon(pokemon.id)
+									} else {
+										localeContext.setPokedex((prevState) => ({
+											...prevState,
+											items: [
+												...prevState.items,
+												{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
+											],
+										}))
+									}
+								}}>
+								<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
+							</button>
 							<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
 								<img
+									className='home__grid__item__content__image'
 									src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
 									onError={(e) => {
 										e.target.onError = null
