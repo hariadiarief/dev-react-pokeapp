@@ -10,12 +10,20 @@ export default function LocaleContextProvider({ children }) {
 	})
 
 	const releasePokemon = async (pokeId) => {
-		setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) }))
+		if (window.confirm('Really to release this Pokemon?')) {
+			setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) }))
+		}
+	}
+
+	let catchPokemon = () => {
+		return new Promise(async function (resolve, reject) {
+			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(alert('fail to catch'))
+		})
 	}
 
 	useEffect(() => {
 		localStorage.setItem(`pokedex`, JSON.stringify(pokedex.items))
 	}, [pokedex])
 
-	return <LocaleContext.Provider value={{ pokedex, setPokedex, releasePokemon }}>{children}</LocaleContext.Provider>
+	return <LocaleContext.Provider value={{ pokedex, setPokedex, releasePokemon, catchPokemon }}>{children}</LocaleContext.Provider>
 }

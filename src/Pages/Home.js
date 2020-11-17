@@ -74,13 +74,18 @@ export default function Home() {
 										if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
 											localeContext.releasePokemon(pokemon.id)
 										} else {
-											localeContext.setPokedex((prevState) => ({
-												...prevState,
-												items: [
-													...prevState.items,
-													{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
-												],
-											}))
+											localeContext.catchPokemon().then((result) => {
+												if (result) {
+													localeContext.setPokedex((prevState) => ({
+														...prevState,
+														items: [
+															...prevState.items,
+															{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
+														],
+													}))
+													alert('mantab kamu dapat pokemon!!')
+												}
+											})
 										}
 									}}>
 									<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
