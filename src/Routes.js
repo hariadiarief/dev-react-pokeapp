@@ -1,15 +1,21 @@
 import Home from 'Pages/Home'
 import DetailPokemon from 'Pages/DetailPokemon'
+import Pokedex from 'Pages/Pokedex'
 
 export const publicRoutes = [
 	{
 		component: Home,
-		name: 'Home',
-		route: '/',
+		path: '/',
+		exact: true,
 	},
 	{
 		component: DetailPokemon,
-		name: 'Detail',
-		route: '/:id',
+		path: '/pokemon/:id',
+		exact: true,
+	},
+	{
+		component: Pokedex,
+		path: '/pokedex',
+		exact: true,
 	},
 ]

@@ -59,17 +59,27 @@ export default function Home() {
 	return (
 		<div className='home'>
 			<div className='home__title'>Poke Apps</div>
-
-			<div className='home__grid container'>
+			<Link to={'/pokedex'}>Pokedex</Link>
+			<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={<h1>Loading</h1>}>
 				{pokemons.items.map((pokemon, index) => {
 					return (
 						<div className='home__grid__item' key={index}>
-							<div className='home__grid__item__save' onClick={() => localeContext.setPokedex((prevState) => [...prevState, pokemon.id])}>
+							<div
+								className='home__grid__item__save'
+								onClick={() =>
+									localeContext.setPokedex((prevState) => ({
+										...prevState,
+										items: [
+											...prevState.items,
+											{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
+										],
+									}))
+								}>
 								<img src={ImgPokeBall} alt='poke-ball' />
 							</div>
-							<Link className='home__grid__item__content' to={`/${pokemon.id}`}>
+							<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
 								<img
-									src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.back_default ?? ImgLoader}
+									src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
 									onError={(e) => {
 										e.target.onError = null
 										e.target.src = ImgBroken
@@ -81,8 +91,7 @@ export default function Home() {
 						</div>
 					)
 				})}
-			</div>
-			<InfiniteScroll pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={<h1>Loading</h1>}></InfiniteScroll>
+			</InfiniteScroll>
 		</div>
 	)
 }

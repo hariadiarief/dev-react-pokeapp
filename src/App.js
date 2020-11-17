@@ -10,7 +10,7 @@ export default class App extends React.Component {
 			<Router>
 				<Switch>
 					{publicRoutes.map((route, index) => (
-						<Route exact path={route.route} component={route.component} key={index} />
+						<Route exact={route.exact} path={route.path} component={route.component} key={index} />
 					))}
 					<Route exact component={NotFound} key='404' />
 				</Switch>
