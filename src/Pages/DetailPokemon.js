@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Layout from '../Components/Layout'
 
 export default function DetailPokemon({ match }) {
 	const [detailPokemon, setDetailPokemon] = useState()
@@ -14,5 +15,9 @@ export default function DetailPokemon({ match }) {
 		fetchPokemonDetail()
 	}, [match.params.id])
 
-	return <h1>{detailPokemon?.name}</h1>
+	return (
+		<Layout>
+			<h1>{detailPokemon?.name}</h1>
+		</Layout>
+	)
 }

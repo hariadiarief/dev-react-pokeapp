@@ -8,6 +8,7 @@ import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
 import ImgPokeBallEmplty from 'Assets/pokeball-empty.png'
 import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
+import Layout from '../Components/Layout'
 
 export default function Home() {
 	const localeContext = useContext(LocaleContext)
@@ -59,47 +60,48 @@ export default function Home() {
 	}, [offset])
 
 	return (
-		<div className='home'>
-			<div className='home__title'>Poke Apps</div>
-			<Link to={'/pokedex'}>Pokedex</Link>
-			<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={<h1>Loading</h1>}>
-				{pokemons.items.map((pokemon, index) => {
-					return (
-						<div className='home__grid__item' key={index}>
-							<button
-								className='home__grid__item__save'
-								style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
-								onClick={() => {
-									if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
-										localeContext.releasePokemon(pokemon.id)
-									} else {
-										localeContext.setPokedex((prevState) => ({
-											...prevState,
-											items: [
-												...prevState.items,
-												{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
-											],
-										}))
-									}
-								}}>
-								<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
-							</button>
-							<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
-								<img
-									className='home__grid__item__content__image'
-									src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
-									onError={(e) => {
-										e.target.onError = null
-										e.target.src = ImgBroken
-									}}
-									alt={pokemon.name}
-								/>
-								<span>{pokemon?.name}</span>
-							</Link>
-						</div>
-					)
-				})}
-			</InfiniteScroll>
-		</div>
+		<Layout>
+			<div className='home'>
+				<div className='home__title'>Poke Apps</div>
+				<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={<h1>Loading</h1>}>
+					{pokemons.items.map((pokemon, index) => {
+						return (
+							<div className='home__grid__item' key={index}>
+								<button
+									className='home__grid__item__save'
+									style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+									onClick={() => {
+										if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
+											localeContext.releasePokemon(pokemon.id)
+										} else {
+											localeContext.setPokedex((prevState) => ({
+												...prevState,
+												items: [
+													...prevState.items,
+													{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
+												],
+											}))
+										}
+									}}>
+									<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
+								</button>
+								<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
+									<img
+										className='home__grid__item__content__image'
+										src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
+										onError={(e) => {
+											e.target.onError = null
+											e.target.src = ImgBroken
+										}}
+										alt={pokemon.name}
+									/>
+									<span>{pokemon?.name}</span>
+								</Link>
+							</div>
+						)
+					})}
+				</InfiniteScroll>
+			</div>
+		</Layout>
 	)
 }
