@@ -21,7 +21,15 @@ export default class Alert {
 							<div className='alert-toaster__content__desc--info'>
 								<span>{title}</span>
 								<b>{message}</b>
-								{!config ? null : <button onClick={onProceed}>{proceedLabel}</button>}
+								{!config ? null : (
+									<button
+										onClick={() => {
+											onProceed()
+											onClose()
+										}}>
+										{proceedLabel}
+									</button>
+								)}
 							</div>
 						</div>
 						<IconClose onClick={onClose} />
@@ -44,7 +52,15 @@ export default class Alert {
 							<div className='alert-toaster__content__desc--success'>
 								<span>{title}</span>
 								<b>{message}</b>
-								{!config ? null : <button onClick={onProceed}>{proceedLabel}</button>}
+								{!config ? null : (
+									<button
+										onClick={() => {
+											onProceed()
+											onClose()
+										}}>
+										{proceedLabel}
+									</button>
+								)}
 							</div>
 						</div>
 						<IconClose onClick={onClose} />
@@ -97,7 +113,15 @@ export default class Alert {
 							<div className='alert-toaster__content__desc--failed'>
 								<span>{title}</span>
 								<b>{message}</b>
-								{!config ? null : <button onClick={onProceed}>{proceedLabel}</button>}
+								{!config ? null : (
+									<button
+										onClick={() => {
+											onProceed()
+											onClose()
+										}}>
+										{proceedLabel}
+									</button>
+								)}
 							</div>
 						</div>
 						<IconClose onClick={onClose} />

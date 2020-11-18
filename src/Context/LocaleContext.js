@@ -11,17 +11,15 @@ export default function LocaleContextProvider({ children }) {
 	})
 
 	const releasePokemon = (pokeId) => {
-		Alert.warning('Sure ??', 'you failed to get pokemon, but you can try again', {
+		Alert.warning('Sure to release pokemon 😕?', 'You will lose this pokemon if you take it off', {
 			onProceed: () => setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) })),
-			proceedLabel: 'ok',
+			proceedLabel: 'Release',
 		})
-		// if (window.confirm('Really to release this Pokemon?')) {
-		// }
 	}
 
 	let catchPokemon = () => {
 		return new Promise(async function (resolve, reject) {
-			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(Alert.failed('Huft 😭😭😭', 'you failed to get pokemon, but you can try again'))
+			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(Alert.failed('Huft 😭', 'You failed to get pokemon. But no worry, you can try again'))
 		})
 	}
 

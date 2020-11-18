@@ -11,7 +11,7 @@ import ImgPokeBallEmplty from 'Assets/pokeball-empty.png'
 import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
 import Layout from '../Components/Layout'
 
-export default function Home() {
+export default function Home({ history }) {
 	const localeContext = useContext(LocaleContext)
 
 	const limit = 10
@@ -84,7 +84,12 @@ export default function Home() {
 															{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
 														],
 													}))
-													Alert.success('Yeaayyy 🔥🔥🔥', 'you got pokemon !!!')
+													Alert.success('Yeay you got pokemon 🔥', 'You can see your pokemon collection in Pokédex', {
+														onProceed: () => {
+															history.push('/pokedex')
+														},
+														proceedLabel: 'Go to Pokédex',
+													})
 												}
 											})
 										}
