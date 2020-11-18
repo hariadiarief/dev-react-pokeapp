@@ -1,23 +1,27 @@
 import React, { createContext, useEffect, useState } from 'react'
 
+import Alert from 'Services/Alert'
+
 export const LocaleContext = createContext()
 export const LocaleContextConsumer = LocaleContext.Consumer
-
 export default function LocaleContextProvider({ children }) {
 	const [pokedex, setPokedex] = useState({
 		isLoading: false,
 		items: JSON.parse(localStorage.getItem('pokedex')) ?? [],
 	})
 
-	const releasePokemon = async (pokeId) => {
-		if (window.confirm('Really to release this Pokemon?')) {
-			setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) }))
-		}
+	const releasePokemon = (pokeId) => {
+		Alert.warning('Sure ??', 'you failed to get pokemon, but you can try again', {
+			onProceed: () => setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) })),
+			proceedLabel: 'ok',
+		})
+		// if (window.confirm('Really to release this Pokemon?')) {
+		// }
 	}
 
 	let catchPokemon = () => {
 		return new Promise(async function (resolve, reject) {
-			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(alert('fail to catch'))
+			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(Alert.failed('Huft 😭😭😭', 'you failed to get pokemon, but you can try again'))
 		})
 	}
 

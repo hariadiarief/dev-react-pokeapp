@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './App'
-import LocaleContextProvider from 'Context/LocaleContext'
-import './Style/Main.scss'
+// Import css vendor
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
+//import locale file
+import App from './App'
+import './Style/Main.scss'
+import LocaleContextProvider from 'Context/LocaleContext'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import reportWebVitals from './reportWebVitals'
 

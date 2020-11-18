@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
 
 import { LocaleContext } from 'Context/LocaleContext'
+import Alert from 'Services/Alert'
 
 import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
@@ -83,7 +84,7 @@ export default function Home() {
 															{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
 														],
 													}))
-													alert('mantab kamu dapat pokemon!!')
+													Alert.success('Yeaayyy 🔥🔥🔥', 'you got pokemon !!!')
 												}
 											})
 										}
