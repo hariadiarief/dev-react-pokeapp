@@ -50,7 +50,7 @@ export default function DetailPokemon({ match }) {
 					{localeContext.pokedex.items.filter((item) => item.id === detailPokemon?.id).length === 0 ? null : (
 						<div className='detail__possessive'>
 							<span>
-								you already have this pokemon with the nickname "{localeContext.pokedex.items.find((item) => item.id !== detailPokemon?.id).name}". Go to Pokédex to see
+								you already have this pokemon with the nickname "{localeContext.pokedex.items.find((item) => item.id === detailPokemon?.id).name}". Go to Pokédex to see
 								your all collections
 							</span>
 						</div>
