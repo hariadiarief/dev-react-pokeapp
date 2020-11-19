@@ -58,7 +58,9 @@ class Layout extends Component {
 				</div>
 				<div className='layout__header__navigations' style={isMobileNavShow ? { display: 'flex' } : { display: 'none' }}>
 					<NavLink to='/' exact className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
-						<img src={ImgPokeball} alt='' />
+						<div className='layout__header__navigation--home'>
+							<img src={ImgPokeball} alt='' />
+						</div>
 					</NavLink>
 					<NavLink to='/pokedex' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
 						Pokédex

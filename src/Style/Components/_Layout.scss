@@ -75,9 +75,22 @@
     &__navigation {
         @extend %layout-navigation__text;
 
-        >img {
-            width: 31px;
-            height: 31px;
+        &--home {
+            img {
+                width: 31px;
+                height: 31px;
+
+                @include for-size(phone) {
+                    display: none;
+                }
+            }
+
+            @include for-size(phone) {
+                &:after {
+                    content: 'Home';
+                }
+            }
+
         }
     }
 

@@ -62,37 +62,55 @@ export default function Home({ history }) {
 		// eslint-disable-next-line
 	}, [offset])
 
+	const toogleCatchRelease = (pokemon) => {
+		if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
+			localeContext.releasePokemon(pokemon.id)
+		} else {
+			localeContext.catchPokemon().then((result) => {
+				if (result) {
+					Alert.success('Yeay you got pokemon 🔥', 'Now you can save its', {
+						onProceed: () => {
+							setSelectedPokemon({
+								id: pokemon.id,
+								name: pokemon.name,
+								spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default,
+							})
+						},
+						proceedLabel: 'Save',
+					})
+				}
+			})
+		}
+	}
+
+	const handleSubmitNickname = (e) => {
+		e.preventDefault()
+		localeContext
+			.savePokemon(selectedPokemon)
+			.then((result) => {
+				if (result) {
+					localeContext.setPokedex((prevState) => ({
+						...prevState,
+						items: [...prevState.items, selectedPokemon],
+					}))
+					setSelectedPokemon(null)
+				}
+			})
+			.catch((err) => alert(err))
+	}
+
 	return (
 		<Layout>
 			<div className='home'>
 				<div className='home__title'>Poke Apps</div>
-				<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={<h1>Loading</h1>}>
+				<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={renderLoader()}>
 					{pokemons.items.map((pokemon, index) => {
 						return (
 							<div className='home__grid__item' key={index}>
 								<button
 									className='home__grid__item__save'
 									style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
-									onClick={() => {
-										if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
-											localeContext.releasePokemon(pokemon.id)
-										} else {
-											localeContext.catchPokemon().then((result) => {
-												if (result) {
-													Alert.success('Yeay you got pokemon 🔥', 'Now you can save its', {
-														onProceed: () => {
-															setSelectedPokemon({
-																id: pokemon.id,
-																name: pokemon.name,
-																spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default,
-															})
-														},
-														proceedLabel: 'Save',
-													})
-												}
-											})
-										}
-									}}>
+									onClick={() => toogleCatchRelease(pokemon)}>
 									<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
 								</button>
 								<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
@@ -114,26 +132,22 @@ export default function Home({ history }) {
 			</div>
 
 			<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
-				<form
-					onSubmit={(e) => {
-						e.preventDefault()
-						localeContext
-							.savePokemon(selectedPokemon)
-							.then((result) => {
-								if (result) {
-									localeContext.setPokedex((prevState) => ({
-										...prevState,
-										items: [...prevState.items, selectedPokemon],
-									}))
-									setSelectedPokemon(null)
-								}
-							})
-							.catch((err) => alert(err))
-					}}>
+				<form onSubmit={handleSubmitNickname}>
 					<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
 					<button type='submit'>Save</button>
 				</form>
 			</Modal>
 		</Layout>
 	)
+
+	function renderLoader() {
+		return Array.apply(null, Array(6)).map(() => (
+			<div className='home__grid__item'>
+				<Link className='home__grid__item__content'>
+					<img className='home__grid__item__content__image' src={ImgLoader} alt='loader' />
+					<span>Loading ...</span>
+				</Link>
+			</div>
+		))
+	}
 }
