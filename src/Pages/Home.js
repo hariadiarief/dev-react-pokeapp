@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Fragment } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
@@ -10,7 +10,7 @@ import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
 import ImgPokeBallEmplty from 'Assets/pokeball-empty.png'
 import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
-import Layout from '../Components/Layout'
+import { Layout, Meta } from 'Components'
 
 export default function Home({ history }) {
 	const localeContext = useContext(LocaleContext)
@@ -100,44 +100,47 @@ export default function Home({ history }) {
 	}
 
 	return (
-		<Layout>
-			<div className='home'>
-				<div className='home__title'>Poke Apps</div>
-				<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={renderLoader()}>
-					{pokemons.items.map((pokemon, index) => {
-						return (
-							<div className='home__grid__item' key={index}>
-								<button
-									className='home__grid__item__save'
-									style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
-									onClick={() => toogleCatchRelease(pokemon)}>
-									<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
-								</button>
-								<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
-									<img
-										className='home__grid__item__content__image'
-										src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
-										onError={(e) => {
-											e.target.onError = null
-											e.target.src = ImgBroken
-										}}
-										alt={pokemon.name}
-									/>
-									<span>{pokemon?.name}</span>
-								</Link>
-							</div>
-						)
-					})}
-				</InfiniteScroll>
-			</div>
+		<Fragment>
+			<Meta title='Home' />
+			<Layout>
+				<div className='home'>
+					<div className='home__title'>Poke Apps</div>
+					<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={renderLoader()}>
+						{pokemons.items.map((pokemon, index) => {
+							return (
+								<div className='home__grid__item' key={index}>
+									<button
+										className='home__grid__item__save'
+										style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+										onClick={() => toogleCatchRelease(pokemon)}>
+										<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
+									</button>
+									<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
+										<img
+											className='home__grid__item__content__image'
+											src={pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default ?? ImgLoader}
+											onError={(e) => {
+												e.target.onError = null
+												e.target.src = ImgBroken
+											}}
+											alt={pokemon.name}
+										/>
+										<span>{pokemon?.name}</span>
+									</Link>
+								</div>
+							)
+						})}
+					</InfiniteScroll>
+				</div>
 
-			<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
-				<form onSubmit={handleSubmitNickname}>
-					<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
-					<button type='submit'>Save</button>
-				</form>
-			</Modal>
-		</Layout>
+				<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
+					<form onSubmit={handleSubmitNickname}>
+						<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
+						<button type='submit'>Save</button>
+					</form>
+				</Modal>
+			</Layout>
+		</Fragment>
 	)
 
 	function renderLoader() {
