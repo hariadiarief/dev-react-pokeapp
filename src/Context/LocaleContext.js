@@ -19,8 +19,7 @@ export default function LocaleContextProvider({ children }) {
 
 	let catchPokemon = () => {
 		return new Promise(async function (resolve, reject) {
-			resolve(true)
-			// Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(Alert.failed('Huft 😭', 'You failed to get pokemon. But no worry, you can try again'))
+			Math.floor(Math.random() * 10) > 5 ? resolve(true) : reject(Alert.failed('Huft 😭', 'You failed to get pokemon. But no worry, you can try again'))
 		})
 	}
 
@@ -29,14 +28,8 @@ export default function LocaleContextProvider({ children }) {
 	}, [pokedex])
 
 	let savePokemon = (pokemon) => {
-		return new Promise(async function (resolve, reject) {
-			alert(pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0)
+		return new Promise(async function (resolve) {
 			pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0 ? resolve(true) : resolve(false)
-			// if (pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0) {
-			// 	resolve(true)
-			// } else {
-			// 	reject()
-			// }
 		})
 	}
 
