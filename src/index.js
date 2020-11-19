@@ -10,10 +10,12 @@ import './Style/Main.scss'
 import LocaleContextProvider from 'Context/LocaleContext'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import reportWebVitals from './reportWebVitals'
+import { Meta } from 'Components'
 
 ReactDOM.render(
 	<React.StrictMode>
 		<LocaleContextProvider>
+			<Meta />
 			<App />
 		</LocaleContextProvider>
 	</React.StrictMode>,
