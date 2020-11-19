@@ -117,17 +117,18 @@ export default function Home({ history }) {
 				<form
 					onSubmit={(e) => {
 						e.preventDefault()
-						localeContext.savePokemon(selectedPokemon).then((result) => {
-							if (result) {
-								localeContext.setPokedex((prevState) => ({
-									...prevState,
-									items: [...prevState.items, selectedPokemon],
-								}))
-								setSelectedPokemon(null)
-							} else {
-								alert('failed, nickname is same')
-							}
-						})
+						localeContext
+							.savePokemon(selectedPokemon)
+							.then((result) => {
+								if (result) {
+									localeContext.setPokedex((prevState) => ({
+										...prevState,
+										items: [...prevState.items, selectedPokemon],
+									}))
+									setSelectedPokemon(null)
+								}
+							})
+							.catch((err) => alert(err))
 					}}>
 					<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
 					<button type='submit'>Save</button>

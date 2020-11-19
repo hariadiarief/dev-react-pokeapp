@@ -28,8 +28,8 @@ export default function LocaleContextProvider({ children }) {
 	}, [pokedex])
 
 	let savePokemon = (pokemon) => {
-		return new Promise(async function (resolve) {
-			pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0 ? resolve(true) : resolve(false)
+		return new Promise(async function (resolve, reject) {
+			pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0 ? resolve(true) : reject(new Error(`failed, nickname can't be same`))
 		})
 	}
 
