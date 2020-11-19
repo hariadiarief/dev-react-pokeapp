@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
+import Modal from 'react-modal'
 
 import { LocaleContext } from 'Context/LocaleContext'
 import Alert from 'Services/Alert'
@@ -19,6 +20,7 @@ export default function Home({ history }) {
 	const [isHasMore, setIsHasMore] = useState(null)
 	const [pokemons, setPokemons] = useState({ isLoading: true, isLoadingMore: false, items: [] })
 	const [pokemonDetail, setPokemonDetail] = useState({ isLoading: true, items: [] })
+	const [selectedPokemon, setSelectedPokemon] = useState(null)
 
 	const fetchPokemon = async () => {
 		const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -77,18 +79,15 @@ export default function Home({ history }) {
 										} else {
 											localeContext.catchPokemon().then((result) => {
 												if (result) {
-													localeContext.setPokedex((prevState) => ({
-														...prevState,
-														items: [
-															...prevState.items,
-															{ id: pokemon.id, name: pokemon.name, spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default },
-														],
-													}))
-													Alert.success('Yeay you got pokemon 🔥', 'You can see your pokemon collection in Pokédex', {
+													Alert.success('Yeay you got pokemon 🔥', 'Now you can save its', {
 														onProceed: () => {
-															history.push('/pokedex')
+															setSelectedPokemon({
+																id: pokemon.id,
+																name: pokemon.name,
+																spiritImage: pokemonDetail.items.find((item) => item.id === pokemon.id)?.sprites.front_default,
+															})
 														},
-														proceedLabel: 'Go to Pokédex',
+														proceedLabel: 'Save',
 													})
 												}
 											})
@@ -113,6 +112,27 @@ export default function Home({ history }) {
 					})}
 				</InfiniteScroll>
 			</div>
+
+			<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault()
+						localeContext.savePokemon(selectedPokemon).then((result) => {
+							if (result) {
+								localeContext.setPokedex((prevState) => ({
+									...prevState,
+									items: [...prevState.items, selectedPokemon],
+								}))
+								setSelectedPokemon(null)
+							} else {
+								alert('failed, nickname is same')
+							}
+						})
+					}}>
+					<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
+					<button type='submit'>Save</button>
+				</form>
+			</Modal>
 		</Layout>
 	)
 }
