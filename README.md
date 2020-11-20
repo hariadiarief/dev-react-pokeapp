@@ -1,5 +1,5 @@
 # pokeapp
-Cari dan Tangkap Pokemon mu
+Find and Catch your Pokemon, applications can be accessed via the web https://catchpokemon.netlify.app/
 
 ## Tech Stacks
 
