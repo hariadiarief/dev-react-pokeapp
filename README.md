@@ -15,3 +15,9 @@ You’ll need to have Node >= 10 on your local development machine (but it’s n
 npm install
 npm start
 ```
+
+## Deployment Status
+
+This App has been deployed on Netlify
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dcfcc45f-b421-46ac-8a8c-064434bdb154/deploy-status)](https://app.netlify.com/sites/catchpokemon/deploys)
