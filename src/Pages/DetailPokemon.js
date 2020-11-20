@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react'
-import Modal from 'react-modal'
 
 import { LocaleContext } from 'Context/LocaleContext'
 import Alert from 'Services/Alert'
@@ -119,28 +118,6 @@ export default function DetailPokemon({ match }) {
 						</button>
 					)}
 				</div>
-
-				<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault()
-							localeContext
-								.savePokemon(selectedPokemon)
-								.then((result) => {
-									if (result) {
-										localeContext.setPokedex((prevState) => ({
-											...prevState,
-											items: [...prevState.items, selectedPokemon],
-										}))
-										setSelectedPokemon(null)
-									}
-								})
-								.catch((err) => alert(err))
-						}}>
-						<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
-						<button type='submit'>Save</button>
-					</form>
-				</Modal>
 			</Layout>
 		</Fragment>
 	)
