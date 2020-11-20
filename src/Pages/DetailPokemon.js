@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 
 import { LocaleContext } from 'Context/LocaleContext'
 import Alert from 'Services/Alert'
-import { Layout, Meta } from 'Components'
+import { Layout, Meta, ModalNickName } from 'Components'
 
 import ImgLoader from 'Assets/loader.gif'
 import ImgBroken from 'Assets/broken.png'
@@ -29,6 +29,7 @@ export default function DetailPokemon({ match }) {
 	return (
 		<Fragment>
 			<Meta title={detailPokemon?.name.charAt(0).toUpperCase() + detailPokemon?.name.slice(1)} />
+			<ModalNickName selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
 
 			<Layout>
 				<div className='container detail'>

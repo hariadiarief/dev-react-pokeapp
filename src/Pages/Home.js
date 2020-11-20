@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
-import Modal from 'react-modal'
 
-import { LocaleContext } from 'Context/LocaleContext'
 import Alert from 'Services/Alert'
+import { LocaleContext } from 'Context/LocaleContext'
+import { Layout, Meta, ModalNickName } from 'Components'
 
 import ImgBroken from 'Assets/broken.png'
 import ImgLoader from 'Assets/loader.gif'
 import ImgPokeBallEmplty from 'Assets/pokeball-empty.png'
 import ImgPokeBallFilled from 'Assets/pokeball-filled.png'
-import { Layout, Meta } from 'Components'
 
-export default function Home({ history }) {
+export default function Home() {
 	const localeContext = useContext(LocaleContext)
 
 	const limit = 10
@@ -83,25 +82,11 @@ export default function Home({ history }) {
 		}
 	}
 
-	const handleSubmitNickname = (e) => {
-		e.preventDefault()
-		localeContext
-			.savePokemon(selectedPokemon)
-			.then((result) => {
-				if (result) {
-					localeContext.setPokedex((prevState) => ({
-						...prevState,
-						items: [...prevState.items, selectedPokemon],
-					}))
-					setSelectedPokemon(null)
-				}
-			})
-			.catch((err) => alert(err))
-	}
-
 	return (
 		<Fragment>
 			<Meta title='Home' />
+			<ModalNickName selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
+
 			<Layout>
 				<div className='home'>
 					<div className='home__title'>Poke Apps</div>
@@ -132,13 +117,6 @@ export default function Home({ history }) {
 						})}
 					</InfiniteScroll>
 				</div>
-
-				<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
-					<form onSubmit={handleSubmitNickname}>
-						<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
-						<button type='submit'>Save</button>
-					</form>
-				</Modal>
 			</Layout>
 		</Fragment>
 	)
