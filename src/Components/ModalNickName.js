@@ -23,7 +23,8 @@ export default function ModalNickName({ selectedPokemon, setSelectedPokemon }) {
 	}
 	return (
 		<Modal isOpen={selectedPokemon} onRequestClose={() => setSelectedPokemon(null)} className='modalContainer' overlayClassName='modalOverlayCenter'>
-			<form onSubmit={handleSubmitNickname}>
+			<form onSubmit={handleSubmitNickname} className='modal-nickname'>
+				<h4>Give Your Pokemon Nickname</h4>
 				<input type='text' value={selectedPokemon?.name} onChange={({ target: { value } }) => setSelectedPokemon({ ...selectedPokemon, name: value })} />
 				<button type='submit'>Save</button>
 			</form>
