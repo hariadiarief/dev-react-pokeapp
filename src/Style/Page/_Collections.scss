@@ -1,0 +1,27 @@
+.collection {
+    &__emmpty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 31px;
+
+        >img {
+            align-self: center;
+            width: 45%;
+            margin-bottom: 21px;
+        }
+
+        >span {
+            margin-bottom: 12px;
+        }
+
+        >a {
+            background-color: #FC777A;
+            color: white;
+            border-radius: 14px;
+            border: none;
+            padding: 8px 21px;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,3 +1,10 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .home__title {
     font-weight: 600;
     font-size: 31px;
