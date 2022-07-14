@@ -19,12 +19,12 @@ export default function Pokdex() {
 					<div className='home__title'>Your Collection</div>
 
 					<div className='home__grid container'>
-						{localeContext.pokedex.items?.map((pokemon, index) => {
+						{localeContext.collection.items?.map((pokemon, index) => {
 							return (
 								<div className='home__grid__item' key={index}>
 									<div
 										className='home__grid__item__save'
-										style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+										style={localeContext.collection.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
 										onClick={() => localeContext.releasePokemon(pokemon.id)}>
 										<img src={ImgPokeBallFilled} alt='poke-ball' />
 									</div>

@@ -33,7 +33,7 @@ export default function DetailPokemon({ match }) {
 			<Layout>
 				<div className='container detail'>
 					<div className='detail__sprites'>
-						{localeContext.pokedex.items.filter((item) => item.id === detailPokemon?.id).length === 0 ? null : (
+						{localeContext.collection.items.filter((item) => item.id === detailPokemon?.id).length === 0 ? null : (
 							<button className='home__grid__item__save' style={{ backgroundColor: 'red' }}>
 								<img src={ImgPokeBallFilled} alt='poke-ball' />
 							</button>
@@ -50,10 +50,10 @@ export default function DetailPokemon({ match }) {
 							alt='sprites.front_default'
 						/>
 
-						{localeContext.pokedex.items.filter((item) => item.id === detailPokemon?.id).length === 0 ? null : (
+						{localeContext.collection.items.filter((item) => item.id === detailPokemon?.id).length === 0 ? null : (
 							<div className='detail__possessive'>
 								<span>
-									you already have this pokemon with the nickname "{localeContext.pokedex.items.find((item) => item.id === detailPokemon?.id).name}". Go to Pokédex to see
+									you already have this pokemon with the nickname "{localeContext.collection.items.find((item) => item.id === detailPokemon?.id).name}". Go to Pokédex to see
 									your all collections
 								</span>
 							</div>
@@ -87,7 +87,7 @@ export default function DetailPokemon({ match }) {
 							{isCollapsed ? 'Show More Detail...' : '~ Show Less Detail ~'}
 						</div>
 					</div>
-					{localeContext.pokedex.items.filter((item) => item.id === parseInt(match.params.id)).length === 0 ? (
+					{localeContext.collection.items.filter((item) => item.id === parseInt(match.params.id)).length === 0 ? (
 						<button
 							className='detail__button--catch'
 							onClick={() => {

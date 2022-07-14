@@ -5,14 +5,14 @@ import Alert from 'Services/Alert'
 export const LocaleContext = createContext()
 export const LocaleContextConsumer = LocaleContext.Consumer
 export default function LocaleContextProvider({ children }) {
-	const [pokedex, setPokedex] = useState({
+	const [collection, setCollection] = useState({
 		isLoading: false,
-		items: JSON.parse(localStorage.getItem('pokedex')) ?? [],
+		items: JSON.parse(localStorage.getItem('collection')) ?? [],
 	})
 
 	const releasePokemon = (pokeId) => {
 		Alert.warning('Sure to release pokemon 😕?', 'You will lose this pokemon if you take it off', {
-			onProceed: () => setPokedex((prevState) => ({ ...prevState, items: pokedex.items.filter((item) => item.id !== pokeId) })),
+			onProceed: () => setCollection((prevState) => ({ ...prevState, items: collection.items.filter((item) => item.id !== pokeId) })),
 			proceedLabel: 'Release',
 		})
 	}
@@ -24,14 +24,14 @@ export default function LocaleContextProvider({ children }) {
 	}
 
 	useEffect(() => {
-		localStorage.setItem(`pokedex`, JSON.stringify(pokedex.items))
-	}, [pokedex])
+		localStorage.setItem(`collection`, JSON.stringify(collection.items))
+	}, [collection])
 
 	let savePokemon = (pokemon) => {
 		return new Promise(async function (resolve, reject) {
-			pokedex.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0 ? resolve(true) : reject(new Error(`failed, nickname can't be same`))
+			collection.items.filter((item) => item?.name.toLowerCase() === pokemon.name.toLowerCase()).length === 0 ? resolve(true) : reject(new Error(`failed, nickname can't be same`))
 		})
 	}
 
-	return <LocaleContext.Provider value={{ pokedex, setPokedex, releasePokemon, catchPokemon, savePokemon }}>{children}</LocaleContext.Provider>
+	return <LocaleContext.Provider value={{ collection, setCollection, releasePokemon, catchPokemon, savePokemon }}>{children}</LocaleContext.Provider>
 }

@@ -15,7 +15,7 @@ export const publicRoutes = [
 	},
 	{
 		component: Collection,
-		path: '/pokedex',
+		path: '/collection',
 		exact: true,
 	},
 ]

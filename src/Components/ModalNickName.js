@@ -12,7 +12,7 @@ export default function ModalNickName({ selectedPokemon, setSelectedPokemon }) {
 			.savePokemon(selectedPokemon)
 			.then((result) => {
 				if (result) {
-					localeContext.setPokedex((prevState) => ({
+					localeContext.setCollection((prevState) => ({
 						...prevState,
 						items: [...prevState.items, selectedPokemon],
 					}))
