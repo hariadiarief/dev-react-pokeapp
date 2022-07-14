@@ -62,8 +62,8 @@ class Layout extends Component {
 							<img src={ImgPokeball} alt='' />
 						</div>
 					</NavLink>
-					<NavLink to='/pokedex' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
-						Pokédex
+					<NavLink to='/collection' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
+						Collection
 					</NavLink>
 					<NavLink to='/about' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
 						About

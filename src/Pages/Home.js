@@ -62,7 +62,7 @@ export default function Home() {
 	}, [offset])
 
 	const toogleCatchRelease = (pokemon) => {
-		if (localeContext.pokedex.items.find((item) => item.id === pokemon.id)) {
+		if (localeContext.collection.items.find((item) => item.id === pokemon.id)) {
 			localeContext.releasePokemon(pokemon.id)
 		} else {
 			localeContext.catchPokemon().then((result) => {
@@ -89,16 +89,16 @@ export default function Home() {
 
 			<Layout>
 				<div className='home'>
-					<div className='home__title'>Poke Apps</div>
+					<div className='home__title'>Pokédex</div>
 					<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={renderLoader()}>
 						{pokemons.items.map((pokemon, index) => {
 							return (
 								<div className='home__grid__item' key={index}>
 									<button
 										className='home__grid__item__save'
-										style={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
+										style={localeContext.collection.items.find((item) => item.id === pokemon.id) ? { backgroundColor: 'red' } : null}
 										onClick={() => toogleCatchRelease(pokemon)}>
-										<img src={localeContext.pokedex.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
+										<img src={localeContext.collection.items.find((item) => item.id === pokemon.id) ? ImgPokeBallFilled : ImgPokeBallEmplty} alt='poke-ball' />
 									</button>
 									<Link className='home__grid__item__content' to={`/pokemon/${pokemon.id}`}>
 										<img
