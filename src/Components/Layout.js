@@ -63,7 +63,7 @@ class Layout extends Component {
 						</div>
 					</NavLink>
 					<NavLink to='/pokedex' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
-						Pokédex
+						Collection
 					</NavLink>
 					<NavLink to='/about' className='layout__header__navigation' activeClassName='layout__header__navigation--active'>
 						About

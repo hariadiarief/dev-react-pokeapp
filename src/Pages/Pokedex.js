@@ -13,10 +13,10 @@ export default function Pokdex() {
 
 	return (
 		<Fragment>
-			<Meta title='Pokédex' />
+			<Meta title='Collection' />
 			<Layout>
 				<div className='home'>
-					<div className='home__title'>Your Pokédex</div>
+					<div className='home__title'>Your Collection</div>
 
 					<div className='home__grid container'>
 						{localeContext.pokedex.items?.map((pokemon, index) => {

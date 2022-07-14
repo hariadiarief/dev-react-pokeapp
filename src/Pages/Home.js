@@ -89,7 +89,7 @@ export default function Home() {
 
 			<Layout>
 				<div className='home'>
-					<div className='home__title'>Poke Apps</div>
+					<div className='home__title'>Pokédex</div>
 					<InfiniteScroll element='div' className='home__grid container' pageStart={0} loadMore={loadMore} hasMore={isHasMore} loader={renderLoader()}>
 						{pokemons.items.map((pokemon, index) => {
 							return (
